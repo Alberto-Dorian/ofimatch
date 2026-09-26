@@ -1,1 +1,681 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <title>OfiMatch | Servicios cerca de ti</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f7fb;
+      color: #111827;
+      min-height: 100vh;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .app {
+      max-width: 520px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: #f5f7fb;
+      padding-bottom: 90px;
+    }
+
+    .header {
+      background: #0b1020;
+      color: white;
+      padding: 22px 20px 28px;
+      border-radius: 0 0 28px 28px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .logo {
+      font-size: 27px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      color: #ff3b6b;
+    }
+
+    .location {
+      font-size: 13px;
+      opacity: .8;
+      margin-top: 4px;
+    }
+
+    .profile {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff3b6b, #ff9f43);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+    }
+
+    .hero h1 {
+      font-size: 31px;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      color: #cbd5e1;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .search {
+      margin-top: 20px;
+      background: white;
+      color: #64748b;
+      border-radius: 16px;
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .content {
+      padding: 22px 18px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 11px;
+    }
+
+    .category {
+      border: none;
+      background: white;
+      border-radius: 18px;
+      padding: 17px 8px;
+      box-shadow: 0 5px 18px rgba(15, 23, 42, .06);
+      transition: .2s;
+    }
+
+    .category:active {
+      transform: scale(.96);
+    }
+
+    .category .icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .category strong {
+      display: block;
+      font-size: 12px;
+    }
+
+    .emergency {
+      margin-top: 25px;
+      background: linear-gradient(135deg, #ff1744, #ff5a36);
+      color: white;
+      border-radius: 22px;
+      padding: 21px;
+      box-shadow: 0 12px 30px rgba(255, 23, 68, .22);
+    }
+
+    .emergency h2 {
+      font-size: 20px;
+      margin-bottom: 7px;
+    }
+
+    .emergency p {
+      font-size: 13px;
+      opacity: .9;
+      line-height: 1.4;
+      margin-bottom: 15px;
+    }
+
+    .emergency button {
+      width: 100%;
+      border: none;
+      background: white;
+      color: #e11d48;
+      padding: 13px;
+      border-radius: 13px;
+      font-weight: 800;
+    }
+
+    .pricing {
+      margin-top: 25px;
+      background: white;
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: 0 5px 18px rgba(15, 23, 42, .06);
+    }
+
+    .pricing h2 {
+      font-size: 19px;
+      margin-bottom: 8px;
+    }
+
+    .price-main {
+      font-size: 30px;
+      font-weight: 900;
+      color: #0f172a;
+      margin: 10px 0;
+    }
+
+    .price-main small {
+      font-size: 14px;
+      font-weight: 500;
+      color: #64748b;
+    }
+
+    .pricing p {
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .benefits {
+      margin-top: 18px;
+      display: grid;
+      gap: 9px;
+    }
+
+    .benefit {
+      font-size: 13px;
+      color: #334155;
+    }
+
+    .professionals {
+      margin-top: 25px;
+    }
+
+    .pro-card {
+      background: white;
+      border-radius: 22px;
+      padding: 16px;
+      display: flex;
+      gap: 13px;
+      align-items: center;
+      box-shadow: 0 5px 18px rgba(15, 23, 42, .06);
+      margin-bottom: 12px;
+    }
+
+    .avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 17px;
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 21px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .pro-info {
+      flex: 1;
+    }
+
+    .pro-info h3 {
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .pro-info p {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 5px;
+    }
+
+    .rating {
+      font-size: 12px;
+      font-weight: 700;
+      color: #f59e0b;
+    }
+
+    .available {
+      font-size: 10px;
+      color: #16a34a;
+      font-weight: 800;
+      margin-top: 3px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(520px, 100%);
+      background: rgba(255,255,255,.96);
+      backdrop-filter: blur(15px);
+      border-top: 1px solid #e5e7eb;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      padding: 10px 5px 12px;
+      z-index: 10;
+    }
+
+    .nav-item {
+      border: none;
+      background: transparent;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .nav-item.active {
+      color: #ff3b6b;
+    }
+
+    .nav-icon {
+      display: block;
+      font-size: 21px;
+      margin-bottom: 3px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      z-index: 20;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      width: min(520px, 100%);
+      background: white;
+      border-radius: 28px 28px 0 0;
+      padding: 25px 20px 30px;
+      animation: slideUp .25s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(100%);
+      }
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    .modal-box h2 {
+      margin-bottom: 10px;
+    }
+
+    .modal-box p {
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .input {
+      width: 100%;
+      border: 1px solid #dbe2ea;
+      border-radius: 13px;
+      padding: 14px;
+      margin-bottom: 12px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .primary {
+      width: 100%;
+      border: none;
+      background: #ff3b6b;
+      color: white;
+      border-radius: 14px;
+      padding: 15px;
+      font-weight: 800;
+      margin-top: 5px;
+    }
+
+    .secondary {
+      width: 100%;
+      border: none;
+      background: #eef2f7;
+      color: #334155;
+      border-radius: 14px;
+      padding: 14px;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 90px;
+      transform: translateX(-50%) translateY(20px);
+      background: #111827;
+      color: white;
+      padding: 13px 18px;
+      border-radius: 14px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s;
+      z-index: 30;
+      width: max-content;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (min-width: 600px) {
+      body {
+        background: #dfe5ee;
+      }
+
+      .app {
+        box-shadow: 0 0 40px rgba(0,0,0,.12);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header class="header">
+    <div class="top">
+      <div>
+        <div class="logo">Ofi<span>Match</span> ❤️</div>
+        <div class="location">📍 Cerca de ti</div>
+      </div>
+
+      <div class="profile">👤</div>
+    </div>
+
+    <div class="hero">
+      <h1>¿Qué necesitas hoy?</h1>
+      <p>Encuentra profesionales disponibles cerca de ti y haz match con quien necesitas.</p>
+    </div>
+
+    <div class="search" onclick="openRequest()">
+      🔎 <span>Buscar un servicio...</span>
+    </div>
+  </header>
+
+  <main class="content">
+
+    <h2 class="section-title">¿Qué oficio necesitas?</h2>
+
+    <div class="categories">
+
+      <button class="category" onclick="selectService('Plomería')">
+        <div class="icon">🚰</div>
+        <strong>Plomería</strong>
+      </button>
+
+      <button class="category" onclick="selectService('Electricidad')">
+        <div class="icon">⚡</div>
+        <strong>Electricidad</strong>
+      </button>
+
+      <button class="category" onclick="selectService('Pintura')">
+        <div class="icon">🎨</div>
+        <strong>Pintura</strong>
+      </button>
+
+      <button class="category" onclick="selectService('Carpintería')">
+        <div class="icon">🪚</div>
+        <strong>Carpintería</strong>
+      </button>
+
+      <button class="category" onclick="selectService('Limpieza')">
+        <div class="icon">🧹</div>
+        <strong>Limpieza</strong>
+      </button>
+
+      <button class="category" onclick="selectService('Aire acondicionado')">
+        <div class="icon">❄️</div>
+        <strong>Aire acondicionado</strong>
+      </button>
+
+      <button class="category" onclick="selectService('Albañilería')">
+        <div class="icon">🧱</div>
+        <strong>Albañilería</strong>
+      </button>
+
+      <button class="category" onclick="selectService('Mecánica')">
+        <div class="icon">🚗</div>
+        <strong>Mecánica</strong>
+      </button>
+
+      <button class="category" onclick="selectService('Tecnología')">
+        <div class="icon">💻</div>
+        <strong>Tecnología</strong>
+      </button>
+
+    </div>
+
+    <section class="emergency">
+      <h2>🚨 ¿Lo necesitas ahora?</h2>
+      <p>Encuentra profesionales disponibles cerca de ti para servicios urgentes.</p>
+      <button onclick="emergencyRequest()">BUSCAR AYUDA AHORA</button>
+    </section>
+
+    <section class="pricing">
+
+      <h2>💰 Tarifa OfiMatch</h2>
+
+      <div class="price-main">
+        $600 <small>hasta 2 horas</small>
+      </div>
+
+      <p>
+        Después de las primeras 2 horas se agregan
+        <strong>$150 por cada hora adicional.</strong>
+      </p>
+
+      <div class="benefits">
+        <div class="benefit">✓ 2 horas incluidas</div>
+        <div class="benefit">✓ Hora 3: $750 total</div>
+        <div class="benefit">✓ Hora 4: $900 total</div>
+        <div class="benefit">✓ Precio visible antes de contratar</div>
+      </div>
+
+    </section>
+
+    <section class="professionals">
+
+      <h2 class="section-title">Profesionales cerca de ti</h2>
+
+      <div class="pro-card">
+
+        <div class="avatar">CR</div>
+
+        <div class="pro-info">
+          <h3>Carlos Rodríguez</h3>
+          <p>🔧 Plomero · 1.2 km</p>
+          <div class="rating">⭐ 4.9 · 127 servicios</div>
+          <div class="available">● DISPONIBLE AHORA</div>
+        </div>
+
+      </div>
+
+      <div class="pro-card">
+
+        <div class="avatar">LM</div>
+
+        <div class="pro-info">
+          <h3>Luis Martínez</h3>
+          <p>⚡ Electricista · 2.1 km</p>
+          <div class="rating">⭐ 4.8 · 94 servicios</div>
+          <div class="available">● DISPONIBLE AHORA</div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+<nav class="bottom-nav">
+
+  <button class="nav-item active" onclick="showToast('Inicio')">
+    <span class="nav-icon">🏠</span>
+    Inicio
+  </button>
+
+  <button class="nav-item" onclick="openRequest()">
+    <span class="nav-icon">❤️</span>
+    Match
+  </button>
+
+  <button class="nav-item" onclick="openRequest()">
+    <span class="nav-icon">➕</span>
+    Publicar
+  </button>
+
+  <button class="nav-item" onclick="showToast('Perfil próximamente')">
+    <span class="nav-icon">👤</span>
+    Perfil
+  </button>
+
+</nav>
+
+<div class="modal" id="modal">
+
+  <div class="modal-box">
+
+    <h2 id="modalTitle">Publicar servicio</h2>
+
+    <p id="modalDescription">
+      Describe lo que necesitas y encontraremos profesionales disponibles cerca de ti.
+    </p>
+
+    <input
+      id="serviceInput"
+      class="input"
+      type="text"
+      placeholder="¿Qué necesitas?"
+    >
+
+    <input
+      class="input"
+      type="text"
+      placeholder="📍 Ubicación"
+      value="Miguel Hidalgo, CDMX"
+    >
+
+    <button class="primary" onclick="publishRequest()">
+      🔎 BUSCAR PROFESIONALES
+    </button>
+
+    <button class="secondary" onclick="closeModal()">
+      Cancelar
+    </button>
+
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+  function openRequest() {
+    document.getElementById("modal").classList.add("show");
+    document.getElementById("serviceInput").focus();
+  }
+
+  function closeModal() {
+    document.getElementById("modal").classList.remove("show");
+  }
+
+  function selectService(service) {
+    document.getElementById("modal").classList.add("show");
+    document.getElementById("serviceInput").value = service;
+    document.getElementById("serviceInput").focus();
+  }
+
+  function emergencyRequest() {
+    document.getElementById("modal").classList.add("show");
+    document.getElementById("modalTitle").textContent = "🚨 Servicio de emergencia";
+    document.getElementById("modalDescription").textContent =
+      "Indica qué necesitas y buscaremos profesionales disponibles cerca de ti.";
+    document.getElementById("serviceInput").placeholder =
+      "Ejemplo: baño tapado";
+    document.getElementById("serviceInput").focus();
+  }
+
+  function publishRequest() {
+
+    const service =
+      document.getElementById("serviceInput").value.trim();
+
+    if (!service) {
+      showToast("Escribe qué servicio necesitas");
+      return;
+    }
+
+    closeModal();
+
+    showToast(
+      "🔎 Buscando profesionales de " + service + " cerca de ti..."
+    );
+
+    setTimeout(function() {
+      showToast("❤️ ¡Encontramos profesionales disponibles!");
+    }, 1800);
+  }
+
+  function showToast(message) {
+
+    const toast = document.getElementById("toast");
+
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    setTimeout(function() {
+      toast.classList.remove("show");
+    }, 2800);
+  }
+
+</script>
+
+</body>
+</html>
